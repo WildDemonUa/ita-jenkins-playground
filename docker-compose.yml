@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  worker:
+    build: ./worker
+    image: worker:latest
+    hostname: worker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  master:
+    build: ./master
+    image: master:latest
+    hostname: master
+    volumes:
+      - "master-vol:/var/jenkins_home/"
+    ports:
+      - "50000:40000"
+    environment:
+      - JENKINS_PASS=test
+    links:
+      - worker:worker
+  nginx:
+    build: ./nginx
+    image: proxynginx:latest
+    ports:
+      - "80:80"
+    links:
+      - master:master
+
+volumes:
+  master-vol:

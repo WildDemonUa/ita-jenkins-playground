@@ -1,0 +1,11 @@
+credentials:2.1.16
+ssh-credentials:1.13
+git:3.5.1
+maven-plugin:2.17
+github:1.28.0
+ssh-slaves:1.21
+greenballs:1.15
+workflow-aggregator:2.5
+ec2:1.36
+job-dsl:1.65
+dashboard-view:2.9.11
