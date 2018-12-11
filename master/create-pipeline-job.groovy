@@ -14,7 +14,7 @@ pipelineJob("DevOps037") {
                         github('DmyMi/spring-petclinic','https')
                         name('origin')
                     }
-                    branches('jenkins', 'master')
+                    branches('jenkins')
                     browser {
                         gitWeb('https://github.com/DmyMi/spring-petclinic')
                     }
