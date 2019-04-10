@@ -2,7 +2,7 @@
 
 pipelineJob("DevOps037") {
     
-    checkoutRetryCount(3)
+    // checkoutRetryCount(3)
     
     concurrentBuild()
     
