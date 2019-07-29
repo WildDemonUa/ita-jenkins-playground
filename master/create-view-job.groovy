@@ -21,7 +21,7 @@ dashboardView('My View') {
     }
     bottomPortlets {
         iframe {
-            effectiveUrl('http://http://example.com/')
+            effectiveUrl('https://github.com/DmyMi/spring-petclinic')
         }
         testStatisticsGrid()
         buildStatistics()
