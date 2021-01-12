@@ -1,5 +1,7 @@
-#!groovy
+import javaposse.jobdsl.dsl.DslScriptLoader
+import javaposse.jobdsl.plugin.JenkinsJobManagement
 
+def jobDslScript = """
 pipelineJob("DevOps037") {
     
     // checkoutRetryCount(3)
@@ -35,3 +37,10 @@ pipelineJob("DevOps037") {
     description('Example Job Seed')
     displayName('DevOps037')
 }
+"""
+def workspace = new File('.')
+
+def jobManagement = new JenkinsJobManagement(System.out, [:], workspace)
+
+def scriptLoader = new DslScriptLoader(jobManagement)
+scriptLoader.runScript(jobDslScript)

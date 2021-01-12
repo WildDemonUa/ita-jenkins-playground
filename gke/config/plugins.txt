@@ -1,3 +1,5 @@
+configuration-as-code:latest
+kubernetes:latest
 credentials:latest
 ssh-credentials:latest
 git:latest
@@ -8,3 +10,4 @@ greenballs:latest
 workflow-aggregator:latest
 job-dsl:latest
 dashboard-view:latest
+matrix-auth:latest

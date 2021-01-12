@@ -1,4 +1,7 @@
-#!groovy
+import javaposse.jobdsl.dsl.DslScriptLoader
+import javaposse.jobdsl.plugin.JenkinsJobManagement
+
+def viewDslScript = """
 dashboardView('My View') {
     jobs {
         name("DevOps037")
@@ -27,3 +30,10 @@ dashboardView('My View') {
         buildStatistics()
     }
 }
+"""
+def workspace = new File('.')
+
+def jobManagement = new JenkinsJobManagement(System.out, [:], workspace)
+
+def scriptLoader = new DslScriptLoader(jobManagement)
+scriptLoader.runScript(viewDslScript)
