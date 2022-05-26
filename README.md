@@ -45,7 +45,8 @@ metadata:
   name: ${YOUR_NAME}-eks
   region: us-east-1
 
-availabilityZones: ['us-east-1a', 'us-east-1b', 'us-east-1c']
+iam:
+  serviceRolePermissionsBoundary: "arn:aws:iam::765410667671:policy/CustomPowerUserBound"
 
 managedNodeGroups:
 - name: nodegroup
@@ -53,9 +54,12 @@ managedNodeGroups:
   instanceType: t2.large
   ssh:
     allow: false
+  iam:
+    instanceRolePermissionsBoundary: "arn:aws:iam::765410667671:policy/CustomPowerUserBound"
 cloudWatch:
   clusterLogging:
     enableTypes: ["api", "audit", "controllerManager"]
+availabilityZones: ['us-east-1a', 'us-east-1b', 'us-east-1c', 'us-east-1d']
 EOF
 
 cd eks
