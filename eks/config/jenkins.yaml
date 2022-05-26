@@ -71,9 +71,9 @@ jobs:
   - script: >
       pipelineJob("DevOps037") {
           
-          // checkoutRetryCount(3)
-          
-          concurrentBuild()
+          properties {
+            disableConcurrentBuilds()
+          }
           
           definition {
               cpsScm {
