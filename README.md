@@ -35,6 +35,7 @@ Password: verysecret
 You need to have a EKS Cluster created with atleast 3 large nodes.
 
 ```bash
+export ACCOUNT_ID=`aws sts get-caller-identity --query "Account" --output text`
 export YOUR_NAME=your_name_here
 cat << EOF > ekscfg.yaml
 ---
@@ -46,7 +47,7 @@ metadata:
   region: us-east-1
 
 iam:
-  serviceRolePermissionsBoundary: "arn:aws:iam::765410667671:policy/CustomPowerUserBound"
+  serviceRolePermissionsBoundary: "arn:aws:iam::${ACCOUNT_ID}:policy/CustomPowerUserBound"
 
 managedNodeGroups:
 - name: nodegroup
@@ -55,7 +56,7 @@ managedNodeGroups:
   ssh:
     allow: false
   iam:
-    instanceRolePermissionsBoundary: "arn:aws:iam::765410667671:policy/CustomPowerUserBound"
+    instanceRolePermissionsBoundary: "arn:aws:iam::${ACCOUNT_ID}:policy/CustomPowerUserBound"
 cloudWatch:
   clusterLogging:
     enableTypes: ["api", "audit", "controllerManager"]
