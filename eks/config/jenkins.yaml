@@ -133,3 +133,8 @@ jobs:
               buildStatistics()
           }
       }
+
+unclassified:
+  themeManager:
+    disableUserThemes: true
+    theme: "material-indigo"

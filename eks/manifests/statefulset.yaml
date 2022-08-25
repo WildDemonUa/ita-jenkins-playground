@@ -54,7 +54,7 @@ spec:
       initContainers:
       - name: init-jenkins
         image: jenkins/jenkins:lts
-        command: ['sh', '-c', "/usr/local/bin/install-plugins.sh < /plugins.txt"]
+        command: ['sh', '-c', "/bin/jenkins-plugin-cli -f /plugins.txt"]
         volumeMounts:
           - name: jenkins-config
             mountPath: /plugins.txt

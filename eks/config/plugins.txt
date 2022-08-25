@@ -11,3 +11,4 @@ workflow-aggregator:latest
 job-dsl:latest
 dashboard-view:latest
 matrix-auth:latest
+theme-manager:latest

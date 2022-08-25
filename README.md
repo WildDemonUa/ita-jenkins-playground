@@ -32,7 +32,7 @@ Login: admin
 Password: verysecret
 
 ## EKS
-You need to have a EKS Cluster created with atleast 3 large nodes.
+You need to have a EKS Cluster created with atleast 3 large nodes. You need to have EKSCTL installed (not covered here)
 
 ```bash
 export ACCOUNT_ID=`aws sts get-caller-identity --query "Account" --output text`
@@ -63,7 +63,9 @@ cloudWatch:
 availabilityZones: ['us-east-1a', 'us-east-1b', 'us-east-1c', 'us-east-1d']
 EOF
 
-cd eks
+eksctl create cluster -f ekscfg.yaml
+
+cd ita-jenkins-playground/eks
 bash deploy.sh
 # Wait 5 minutes
 export SERVICE_IP=$(kubectl get svc --namespace jenkins jenkins --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
