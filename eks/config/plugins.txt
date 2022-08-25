@@ -12,3 +12,4 @@ job-dsl:latest
 dashboard-view:latest
 matrix-auth:latest
 theme-manager:latest
+material-theme:latest
