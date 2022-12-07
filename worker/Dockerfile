@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 # Preparations for sshd
 RUN apt-get update -qq && apt-get install -qqy locales &&\
@@ -22,7 +22,7 @@ RUN apt-get update -qq && apt-get install -qqy \
     iptables \
     git
 
-RUN apt-get update && apt-get install -y software-properties-common openjdk-8-jdk-headless
+RUN apt-get update && apt-get install -y software-properties-common openjdk-11-jdk-headless
 
 # Install Docker from Docker Inc. repositories.
 RUN curl -sSL https://get.docker.com/ | sh

@@ -11,17 +11,21 @@ services:
     build: ./master
     image: master:latest
     hostname: master
+    restart: on-failure
     volumes:
       - "master-vol:/var/jenkins_home/"
     ports:
-      - "50000:40000"
+      - "50000:50000"
     environment:
       - JENKINS_PASS=test
+      - JAVA_OPTS=-Xmx2048m -Djenkins.install.runSetupWizard=false
     links:
       - worker:worker
   nginx:
-    build: ./nginx
-    image: proxynginx:latest
+    image: nginx:latest
+    volumes:
+      - "./nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "./nginx/conf/jenkins.conf:/etc/nginx/conf.d/default.conf"
     ports:
       - "80:80"
     links:

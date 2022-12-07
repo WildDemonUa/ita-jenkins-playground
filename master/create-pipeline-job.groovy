@@ -3,11 +3,11 @@ import javaposse.jobdsl.plugin.JenkinsJobManagement
 
 def jobDslScript = """
 pipelineJob("DevOps037") {
-    
-    // checkoutRetryCount(3)
-    
-    concurrentBuild()
-    
+          
+    properties {
+        disableConcurrentBuilds()
+    }
+
     definition {
         cpsScm {
             scm {
@@ -22,10 +22,6 @@ pipelineJob("DevOps037") {
                     }
                     
                     extensions {
-                        //Sets the strategy that Jenkins will use to choose what branches to build in what order.
-                        choosingStrategy {
-                            alternative()
-                        }
                         cleanBeforeCheckout()
                         pruneBranches()
                     }
