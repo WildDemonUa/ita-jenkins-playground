@@ -1,0 +1,140 @@
+jenkins:
+  systemMessage: "Playing with Jenkins Configuration as Code Deployed to K8S"
+  agentProtocols:
+    - "JNLP4-connect"
+    - "Ping"
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: admin
+        name: "Jenkins Admin"
+        password: verysecret
+  authorizationStrategy:
+    globalMatrix:
+      grantedPermissions:
+        - "Overall/Read:anonymous"
+        - "Job/Read:anonymous"
+        - "View/Read:anonymous"
+        - "Overall/Administer:authenticated"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  mode: NORMAL
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  quietPeriod: 5
+  scmCheckoutRetryCount: 0
+
+  clouds:
+    - kubernetes:
+        name: kubernetes
+        serverUrl: "https://kubernetes.default:443"
+        skipTlsVerify: true
+        namespace: "jenkins"
+        jenkinsUrl: "http://jenkins/"
+        connectTimeout: 0
+        readTimeout: 0
+        containerCapStr: 100
+        maxRequestsPerHostStr: 64
+        retentionTimeout: 5
+        templates:
+          - name: maven
+            label: mavenpodtemplate
+            containers:
+              - name: maven
+                image: maven:3.8.4-adoptopenjdk-11
+                ttyEnabled: true
+                command: cat
+                args: ""
+
+tool:
+  git:
+    installations:
+      - name: Default
+        home: "git"
+  maven:
+    installations:
+      - name: maven3
+        home: "/maven3"
+        properties:
+          - installSource:
+              installers:
+                - maven:
+                    id: "3.8.4"
+
+jobs:
+  - script: >
+      pipelineJob("DevOps037") {
+          
+          properties {
+            disableConcurrentBuilds()
+          }
+          
+          definition {
+              cpsScm {
+                  scm {
+                      git {
+                          remote {
+                              github('DmyMi/spring-petclinic','https')
+                              name('origin')
+                          }
+                          branches('jenkins')
+                          browser {
+                              gitWeb('https://github.com/DmyMi/spring-petclinic')
+                          }
+                          
+                          extensions {
+                              //Sets the strategy that Jenkins will use to choose what branches to build in what order.
+                              choosingStrategy {
+                                  alternative()
+                              }
+                              cleanBeforeCheckout()
+                              pruneBranches()
+                          }
+                      }
+                  scriptPath('Jenkinsfile.k8s')
+                  }
+              }
+          }
+          description('Example Job Seed')
+          displayName('DevOps037')
+      }
+  - script: >
+      dashboardView('My View') {
+          jobs {
+              name("DevOps037")
+          }
+          columns {
+              status()
+              weather()
+              buildButton()
+          }
+          topPortlets {
+              jenkinsJobsList {
+                  displayName('cool jobs')
+              }
+          }
+          leftPortlets {
+              testStatisticsChart()
+          }
+          rightPortlets {
+              testTrendChart()
+          }
+          bottomPortlets {
+              iframe {
+                  effectiveUrl('https://github.com/DmyMi/spring-petclinic')
+              }
+              testStatisticsGrid()
+              buildStatistics()
+          }
+      }
+
+unclassified:
+  themeManager:
+    disableUserThemes: true
+    theme: "material-indigo"

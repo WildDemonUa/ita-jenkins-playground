@@ -16,6 +16,21 @@ agent {
 }
 ```
 
+## K8S
+You need to have a local K8s Cluster created (using Docker for Desktop, Microk8s, k3s, etc.). You need to have `kubectl` installed (not covered here).
+
+```bash
+cd ita-jenkins-playground/eks
+bash deploy.sh
+# Wait 5 minutes
+export SERVICE_IP=$(kubectl get svc --namespace jenkins jenkins --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
+echo http://$SERVICE_IP:80/login
+```
+
+Will create a playground with Jenkins Controller configured using Jenkins Configuration as Code with access to K8S cluster.
+Login: admin
+Password: verysecret
+
 ## GKE
 You need to have a GKE Cluster created with atleast 3 nodes.
 

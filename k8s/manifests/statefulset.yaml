@@ -73,12 +73,5 @@ spec:
           emptyDir: {}
         - name: plugin-dir
           emptyDir: {}
-  volumeClaimTemplates:
-  - metadata:
-      name: jenkins-pv
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "microk8s-hostpath" # for KOPS change this to "default"
-      resources:
-        requests:
-          storage: 10Gi
+        - name: jenkins-pv
+          emptyDir: {}
