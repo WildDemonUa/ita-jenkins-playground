@@ -20,7 +20,8 @@ RUN apt-get update -qq && apt-get install -qqy \
     curl \
     lxc \
     iptables \
-    git
+    git \
+    sudo
 
 RUN apt-get update && apt-get install -y software-properties-common openjdk-11-jdk-headless
 
@@ -37,5 +38,7 @@ RUN echo 'jenkins   ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 EXPOSE 22
 
+USER jenkins
+
 # Default command
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["sudo", "/usr/sbin/sshd", "-D"]

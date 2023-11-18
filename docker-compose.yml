@@ -1,12 +1,21 @@
 version: '3'
 
 services:
+  permissions:
+    image: alpine:latest
+    volumes:
+      - "agent-vol:/home/jenkins/"
+    command: chown -R 1000:1000 /home/jenkins/
   worker:
     build: ./worker
     image: worker:latest
     hostname: worker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - "agent-vol:/home/jenkins/"
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
   master:
     build: ./master
     image: master:latest
@@ -33,3 +42,6 @@ services:
 
 volumes:
   master-vol:
+    driver: local
+  agent-vol:
+    driver: local

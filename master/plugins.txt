@@ -11,3 +11,5 @@ job-dsl:latest
 dashboard-view:latest
 theme-manager:latest
 material-theme:latest
+docker-plugin:latest
+docker-workflow:latest
